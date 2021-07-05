@@ -1,0 +1,17 @@
+.dashboard {
+    margin: 3rem auto;
+    text-align: center;
+  }
+  
+  .dashboard h1 {
+    font-size: 5rem;
+  }
+
+  .dashboard h2 {
+    font-size: 3rem;
+  }
+
+  .dashboard p {
+      font-weight: bold;
+    font-size: 2rem;
+  }  
