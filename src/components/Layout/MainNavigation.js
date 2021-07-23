@@ -1,15 +1,10 @@
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-
+import AuthContext from '../../data/AuthContext';
 import classes from './MainNavigation.module.css';
 
 const MainNavigation = (props) => {
-
-  const logoutHandlerMain = () => {
-    console.log('setLogoutHandler:Main:');
-    props.setLogoutHandlerApp();
-    //props.onLogout();
-  }
-
+  const AuthCtx = useContext(AuthContext);
 
   return (
     <header className={classes.header}>
@@ -19,16 +14,14 @@ const MainNavigation = (props) => {
       <nav>
         <ul>
           <li>
-            <Link to='/auth'>Login</Link>
-          </li>
-          <li>
             <Link to='/dashboard'>Dashboard</Link>
           </li>
           <li>
-            <Link to='/profile'>Profile</Link>
+            {AuthCtx.isLoggedIn &&<Link to='/profile'>Profile</Link>} 
           </li>
           <li>
-            <button onClick={logoutHandlerMain}>Logout</button>
+            {AuthCtx.isLoggedIn &&<button onClick={AuthCtx.logout}>Logout</button>} 
+            {!AuthCtx.isLoggedIn &&<Link to='/auth'>Login</Link>} 
           </li>
         </ul>
       </nav>

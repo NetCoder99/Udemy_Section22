@@ -1,22 +1,19 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import LoginUserApi from '../../data/LoginUserApi';
 
 import classes from './AuthForm.module.css';
+import AuthContext from '../../data/AuthContext';
  
 // ----------------------------------------------------------------------------
 const AuthForm = (props) => {
+  const AuthCtx = useContext(AuthContext);
   const [isLogin,   setIsLogin]     = useState(true);
   const [isLoading, setIsLoaoding]  = useState(false);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
-
-  const setToken = (tokenObj) => {
-    console.log('token3:' + tokenObj.token);
-    props.setTokenHandlerPage(tokenObj);
-  }
 
   AuthForm.propTypes = {
     setTokenHandlerPage: PropTypes.func.isRequired
@@ -34,29 +31,26 @@ const AuthForm = (props) => {
     const passWord = passWordRef.current.value;
     const creds = JSON.stringify({userName: userName,passWord: passWord});
     let res = null;
+    let url = null;
+    let reqType = null;
 
     if (isLogin) {
-      res = await LoginUserApi('http://localhost:8081/login',creds, 'LoginRequest');
-
-      if (res.token)   {
-        console.log('signup:res:login:'   + res.token);
-        setToken(res);
-      }
-      if (res.message) {
-        console.log('signup:res:message:' + res.message);
-        alert(res.message);
-      }
+      url='http://localhost:8081/login';
+      reqType='LoginRequest';
     }
     else {
-      res = await LoginUserApi('http://localhost:8081/signup',creds, 'SignupRequest');
-      if (res.token)   {
-        console.log('signup:res:login:'   + res.token);
-        setToken(res);
-      }
-      if (res.message) {
-        console.log('signup:res:message:' + res.message);
-        alert(res.message);
-      }
+      url='http://localhost:8081/signup';
+      reqType='SignupRequest';
+    }
+
+    res = await LoginUserApi(url, creds, reqType);
+    if (res.token)   {
+      console.log('signup:res:login:'   + res.token);
+      AuthCtx.login(res.token);
+    }
+    if (res.message) {
+      console.log('signup:res:message:' + res.message);
+      alert(res.message);
     }
     setIsLoaoding(false);
 
