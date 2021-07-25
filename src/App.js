@@ -1,5 +1,6 @@
-import { useState, Fragment } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { useContext, Fragment } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import AuthContext from './data/AuthContext';
 
 import Layout from './components/Layout/Layout';
 import MainNavigation from './components/Layout/MainNavigation';
@@ -10,42 +11,23 @@ import HomePage from './pages/HomePage';
 import DashboardPage from './pages/DashboardPage';
 
 function App() {
-
-  const [token, setToken] = useState(true);
-
-  const tokenHandlerApp = (tokenData) => {
-    console.log('+ tokenHandlerApp:' + tokenData.token);
-    setToken(tokenData);
-  }
-
-  const logoutHandlerApp = () => {
-    console.log('+ logoutHandler1:App');
-    setToken(null);
-  }
-
-  if(!token) {
-    return (
-      <Fragment>
-        <MainNavigation setLogoutHandlerApp={logoutHandlerApp} />
-        <AuthPage testValue={"Not logged in"} setTokenHandlerApp={tokenHandlerApp} />
-      </Fragment>
-    );
-  }
+  const AuthCtx = useContext(AuthContext);
 
   return (
-    <Layout setLogoutHandlerApp={logoutHandlerApp}>
+    <Layout>
       <Switch>
         <Route path='/' exact>
           <HomePage />
         </Route>
-        <Route path='/auth'>
-          <AuthPage testValue={"Logged in"} setTokenHandlerApp={tokenHandlerApp} />
-        </Route>
-        <Route path='/dashboard'>
-          <DashboardPage />
-        </Route>
-        <Route path='/profile'>
-          <UserProfile tokenData={token}  />
+        <Route path='/auth'><AuthPage/></Route>
+        { AuthCtx.isLoggedIn && (
+          <Fragment>
+          <Route path='/dashboard'><DashboardPage/></Route>
+          <Route path='/profile'><UserProfile/></Route>
+          </Fragment>
+        )}
+        <Route path='*'>
+          <Redirect to="/" />
         </Route>
       </Switch>
     </Layout>
