@@ -18,6 +18,13 @@
   margin-bottom: 0.5rem;
 }
 
+.error  {
+  color: red !important;
+}
+
+.success {
+  color: green !important;
+}
 .control label {
   display: block;
   color: white;

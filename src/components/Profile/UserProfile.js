@@ -1,14 +1,16 @@
+import { useContext } from 'react';
+import AuthContext from '../../data/AuthContext';
+
 import ProfileForm from './ProfileForm';
 import classes from './UserProfile.module.css';
 
 const UserProfile = (props) => {
-
-  console.log('token4:' + props.tokenData.token);
+  const AuthCtx = useContext(AuthContext);
 
   return (
     <section className={classes.profile}>
-      <h1>Your User Profile</h1>
-      <h2>Current Token:{props.tokenData.token}</h2>
+      <h3>Your User Profile</h3>
+      <h4>Current Token:{AuthCtx.token}</h4>
 
       <ProfileForm />
     </section>

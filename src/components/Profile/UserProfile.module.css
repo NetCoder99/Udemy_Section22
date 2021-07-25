@@ -1,8 +1,18 @@
 .profile {
-  margin: 3rem auto;
+  margin: 1rem auto;
   text-align: center;
 }
 
 .profile h1 {
   font-size: 5rem;
+}
+.profile h3 {
+  font-size: 2.5rem;
+  margin-bottom: .1rem !important;
+  margin-top: .1rem !important;
+}
+.profile h4 {
+  font-size: 1.5rem;
+  margin-bottom: .1rem !important;
+  margin-top: .1rem !important;
 }

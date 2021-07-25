@@ -4,5 +4,20 @@
 }
 
 .starting h1 {
-  font-size: 5rem;
+  font-size: 2rem;
+}
+
+.starting p {
+  font-weight: bolder;
+  font-size: 1rem;
+}
+
+.starting div {
+  margin: auto;
+  width: 60%;
+}
+.starting li {
+  text-align: left;
+  font-size: 1rem;
+  font-weight: bolder;
 }
